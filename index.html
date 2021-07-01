@@ -3,35 +3,44 @@
 <head>
   <meta charset="utf-8">
   <title>Vue.js ToDoList学習</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <link rel="stylesheet" href="main.css">
-  <style>
-    .done { text-decoration: line-through; }
-  </style>
 </head>
-<body class="mx-auto" style="width: 1000px;">
-  <div id="app" v-cloak class="border col-7">
-    <h1 class="text-center">ToDo List</h1>
+<body>
+  <div id="app" v-cloak>
+    <h1>ToDo List</h1>
     <p v-text="setDate"></p>
-    <p>全 {{things.length}} 件 / 現在 {{ remaining }} 件終わりました</p>
-    <ul class="list-group list-group-flush">
-      <li v-if="things.length <= 0">現在やることはありません</li>
-      <li v-else></li>
-      <li v-for="thing in things">
+    <!-- <p>全 {{things.length}} 件 / 現在 {{ remaining }} 件終わりました</p> -->
+    <table>
+      <thead>
+        <tr>
+          <th class="id">ID</th>
+          <th class="title">タイトル</th>
+          <th class="state">状況</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="thing in things" v-bind:key="thing.id">
+          <th>{{ thing.id }}</th>
+          <td>{{ thing.title }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- <ul>
+      <li v-show="things.length <= 0">現在やることはありません</li>
+      <li v-for="thing in things" :key="thing.id">
         <label :class="{ done: thing.isChecked }">
-          <input type="checkbox" v-model="thing.isChecked" v-on:change="saveList">{{ thing.title }}
+          <input type="checkbox" v-model="thing.isChecked" v-on:change="saveList">
+          {{ thing.id }}
+          {{ thing.title }}
         </label>
       </li>  
-    </ul>
+    </ul> -->
     <form @submit.prevent="add">
       <input type="text" v-model.trim="newthings" placeholder="ToDoを入力して下さい">
-      <button type="submit" class="btn btn-outline-primary btn-sm">追加</button>
+      <button type="submit">追加</button>
     </form>
-      <button v-on:click="deleteTodo" class="btn btn-outline-primary btn-sm">削除</button>
+      <button v-on:click="deleteTodo">削除</button>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
   <script src="main.js"></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </body>

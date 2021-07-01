@@ -1,17 +1,17 @@
-var STORAGE_KEY = 'todos-vuejs-demo'
-var todoStorage = {
-  fetch: function () {
-    var todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
-    todos.forEach(function (todo, index) {
-      todo.id = index
-    })
-    todoStorage.uid = todos.length
-    return todos
-  },
-  save: function (todos) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
-  }
-}
+// var STORAGE_KEY = 'todos-vuejs-demo'
+// var thingStorage = {
+//   fetch: function () {
+//     var things = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
+//     things.forEach(function (thing, index) {
+//       thing.id = index
+//     })
+//     thingStorage.uid = things.length
+//     return things
+//   },
+//   save: function (things) {
+//     localStorage.setItem(STORAGE_KEY, JSON.stringify(things))
+//   }
+// }
 
 
 var app = new Vue ({
@@ -19,13 +19,15 @@ var app = new Vue ({
     data: {
         title: "",
         things: [],
+        key: 0,
     },
     methods: {
         add: function(){
             if(this.newthings == "")return;
             this.things.push({
+                id: ++this.key,
                 title: this.newthings,
-                isChecked: false,
+                // isChecked: false,
             });
             this.newthings = "";
             this.saveList();

@@ -22,6 +22,9 @@
         <tr v-for="thing in things" v-bind:key="thing.id">
           <th>{{ thing.id }}</th>
           <td>{{ thing.title }}</td>
+          <td class="state">
+            <button @click="changeState(thing)">{{ labels[thing.state] }}</button>
+          </td>
         </tr>
       </tbody>
     </table>

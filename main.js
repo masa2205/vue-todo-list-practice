@@ -20,6 +20,11 @@ var app = new Vue ({
         title: "",
         things: [],
         key: 0,
+        options: [
+          {value: -1, label: 'すべて'},
+          {value: 0, label: '作業中'},
+          {value: 1, label: '完了'}
+        ]
     },
     methods: {
         add: function(){
@@ -27,10 +32,14 @@ var app = new Vue ({
             this.things.push({
                 id: ++this.key,
                 title: this.newthings,
+                state: 0
                 // isChecked: false,
             });
             this.newthings = "";
             this.saveList();
+        },
+        changeState: function(thing){
+          thing.state = thing.state ? 0 : 1
         },
         deleteTodo: function(){
           if(this.things.length <= 0){
@@ -73,6 +82,11 @@ var app = new Vue ({
              return this.things.filter(function(thing) {
                  return thing.isChecked == true;
              }).length;
+         },
+         labels() {
+           return this.options.reduce(function (a, b){
+             return Object.assign(a, {[b.value]: b.label})
+           }, {})
          },
     }
  })

@@ -1,17 +1,17 @@
-// var STORAGE_KEY = 'todos-vuejs-demo'
-// var thingStorage = {
-//   fetch: function () {
-//     var things = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
-//     things.forEach(function (thing, index) {
-//       thing.id = index
-//     })
-//     thingStorage.uid = things.length
-//     return things
-//   },
-//   save: function (things) {
-//     localStorage.setItem(STORAGE_KEY, JSON.stringify(things))
-//   }
-// }
+var STORAGE_KEY = 'todos-vuejs-demo'
+var thingStorage = {
+  fetch: function () {
+    var things = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
+    things.forEach(function (thing, index) {
+      thing.id = index
+    })
+    thingStorage.uid = things.length
+    return things
+  },
+  save: function (things) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(things))
+  }
+}
 
 
 var app = new Vue ({
@@ -88,5 +88,16 @@ var app = new Vue ({
              return Object.assign(a, {[b.value]: b.label})
            }, {})
          },
+    },
+    watch: {
+      things: {
+        handler: function(things) {
+          thingStorage.save(things)
+        },
+        deep: true
+      }
+    },
+    created() {
+      this.things = thingStorage.fetch()
     }
  })

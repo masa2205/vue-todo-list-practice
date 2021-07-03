@@ -10,6 +10,9 @@
     <h1>ToDo List</h1>
     <p v-text="setDate"></p>
     <!-- <p>全 {{things.length}} 件 / 現在 {{ remaining }} 件終わりました</p> -->
+    <label v-for="label in options">
+      <input type="radio" v-model="current" :value="label.value">{{ label.label }}
+    </label>
     <table>
       <thead>
         <tr>
@@ -19,7 +22,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="thing in things" v-bind:key="thing.id">
+        <tr v-for="thing in computedTodos" v-bind:key="thing.id">
           <th>{{ thing.id }}</th>
           <td>{{ thing.title }}</td>
           <td class="state">
@@ -42,7 +45,7 @@
       <input type="text" v-model.trim="newthings" placeholder="ToDoを入力して下さい">
       <button type="submit">追加</button>
     </form>
-      <button v-on:click="deleteTodo">削除</button>
+      <button v-on:click="deleteTodo(thing)">削除</button>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
   <script src="main.js"></script>

@@ -24,7 +24,8 @@ var app = new Vue ({
           {value: -1, label: 'すべて'},
           {value: 0, label: '作業中'},
           {value: 1, label: '完了'}
-        ]
+        ],
+        current: -1
     },
     methods: {
         add: function(){
@@ -41,15 +42,17 @@ var app = new Vue ({
         changeState: function(thing){
           thing.state = thing.state ? 0 : 1
         },
-        deleteTodo: function(){
+        deleteTodo: function(thing){
           if(this.things.length <= 0){
             return
           }else{
             result = confirm("本当に終わりましたか？");
             if(result) {
-               this.things = this.things.filter(function(thing){
-                   return thing.isChecked === false;
-               }),
+              var index = this.things.indexOf(thing)
+              this.things.splice(index,1)
+              //  this.things = this.things.filter(function(thing){
+              //      return thing.isChecked === false;
+              //  }),
                alert("お疲れ様でした!")
             }else{
  
@@ -71,23 +74,28 @@ var app = new Vue ({
         }
     },
     computed: {
-         setDate: function() {
+          setDate: function() {
             hiduke = new Date();
             year = hiduke.getFullYear();
             month = hiduke.getMonth()+1;
             day = hiduke.getDate();
             return this.transfer_data = year + '/' + month + '/' + day ;
-         },
-         remaining: function() {
-             return this.things.filter(function(thing) {
-                 return thing.isChecked == true;
-             }).length;
-         },
-         labels() {
-           return this.options.reduce(function (a, b){
-             return Object.assign(a, {[b.value]: b.label})
-           }, {})
-         },
+          },
+          remaining: function() {
+              return this.things.filter(function(thing) {
+                  return thing.isChecked == true;
+              }).length;
+          },
+          labels() {
+            return this.options.reduce(function (a, b){
+              return Object.assign(a, {[b.value]: b.label})
+            }, {})
+          },
+          computedTodos: function() {
+            return this.things.filter(function(el) {
+              return this.current < 0 ? true : this.current === el.state
+            },this)
+          }
     },
     watch: {
       things: {

@@ -13,9 +13,11 @@ var thingStorage = {
   }
 }
 
-
 var app = new Vue ({
     el: "#app",
+    components: {
+      'vuejs-datepicker':vuejsDatepicker
+    },
     data: {
         title: "",
         things: [],
@@ -25,7 +27,8 @@ var app = new Vue ({
           {value: 0, label: '作業中'},
           {value: 1, label: '完了'}
         ],
-        current: -1
+        current: -1,
+        DatePickerFormat: 'MM-dd'
     },
     methods: {
         add: function(){
@@ -33,10 +36,13 @@ var app = new Vue ({
             this.things.push({
                 id: ++this.key,
                 title: this.newthings,
+                content: this.newcontent,
+                deadline: this.newdeadline,
                 state: 0
-                // isChecked: false,
             });
             this.newthings = "";
+            this.newcontent = "";
+            this.newdeadline = "";
             this.saveList();
         },
         changeState: function(thing){
@@ -50,18 +56,15 @@ var app = new Vue ({
             if(result) {
               var index = this.things.indexOf(thing)
               this.things.splice(index,1)
-              //  this.things = this.things.filter(function(thing){
-              //      return thing.isChecked === false;
-              //  }),
-               alert("お疲れ様でした!")
+                alert("お疲れ様でした!")
             }else{
- 
+
             };
             this.saveList();
           }
         },
         saveList: function(){
-         localStorage.setItem('things', JSON.stringify(this.things));
+          localStorage.setItem('things', JSON.stringify(this.things));
         },
         loadList: function(){
             this.things=JSON.parse(localStorage.getItem('things'));
@@ -76,10 +79,9 @@ var app = new Vue ({
     computed: {
           setDate: function() {
             hiduke = new Date();
-            year = hiduke.getFullYear();
             month = hiduke.getMonth()+1;
             day = hiduke.getDate();
-            return this.transfer_data = year + '/' + month + '/' + day ;
+            return this.transfer_data =month + '/' + day ;
           },
           remaining: function() {
               return this.things.filter(function(thing) {
@@ -108,4 +110,4 @@ var app = new Vue ({
     created() {
       this.things = thingStorage.fetch()
     }
- })
+})

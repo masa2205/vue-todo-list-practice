@@ -13,10 +13,19 @@ var thingStorage = {
   }
 }
 
+Vue.component('delete-things',{
+  template: '<button @click="deleteEvent">削除</button>',
+  methods:{
+    deleteEvent: function(){
+      this.$emit('from-child')
+    }
+  }
+})
+
 var app = new Vue ({
     el: "#app",
     components: {
-      'vuejs-datepicker':vuejsDatepicker
+      'vuejs-datepicker':vuejsDatepicker,
     },
     data: {
         title: "",

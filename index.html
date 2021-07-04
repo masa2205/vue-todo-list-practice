@@ -42,7 +42,8 @@
       <vuejs-datepicker :format="DatePickerFormat" v-model.trim="newdeadline" placeholder="期限を入力して下さい"></vuejs-datepicker>
       <button type="submit">追加</button>
     </form>
-      <button @:click="deleteTodo(thing)">削除</button>
+      <!-- <button @click="deleteTodo(thing)">削除</button> -->
+      <delete-things @from-child="deleteTodo"></delete-things>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
   <script src="https://unpkg.com/vuejs-datepicker"></script>
